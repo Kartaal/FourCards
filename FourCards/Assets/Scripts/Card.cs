@@ -1,44 +1,104 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using static CardSuitEnum;
+using static CardValueEnum;
 
 public class Card : MonoBehaviour
 {
-    [SerializeField] GameObject cardObj;
-    Transform cardTransform;
-    MeshRenderer cardRenderer;
+    [SerializeField] Sprite Face;
+    [SerializeField] Sprite Back;
+
+    private Image Img;
+    private CardSuitEnum Suit;
+    private CardValueEnum Value;
+    private bool IsFaceUp = true;
+
     int frame = 0;
 
     private void Awake() {
-        cardTransform = cardObj.transform;
-        cardRenderer = cardObj.GetComponent<MeshRenderer>();
-        cardTransform.localScale = new Vector3(5f, 1f, 5f);
-        cardTransform.localPosition = new Vector3(0f, 0f, 0.05f);
+        Img = gameObject.GetComponent<Image>();
     }
 
-
     private void Update() {
-        frame++;
         /*
-        if( frame % 240 == 0 )
+        if(frame % 120 == 0)
         {
-            setCardFace(CardSuitEnum.Spades, 4);
-        } else if(frame % 120 == 0)
+            SetCardFace(Suit, Value);
+        } else if(frame % 60 == 0)
         {
-            setCardFace(CardSuitEnum.Hearts, 4);
+            SetCardFace(CardSuitEnum.Hearts, CardValueEnum.JACK);
         }
+        frame++;
         */
     }
 
-    public void flipCard() {
-        transform.RotateAround(transform.localPosition, Vector3.right, 180);
+    public void FlipCard() {
+        if(IsFaceUp)
+        {
+            Img.sprite = Back;
+            IsFaceUp = !IsFaceUp;
+        } else {
+            Img.sprite = Face;
+            IsFaceUp = !IsFaceUp;
+        }
+
     }
 
-    public void setCardFace(CardSuitEnum suit, int value) {
-        string resourcePath = "Materials/Cards/Cards/" + value;
+    public void SetCardFace(CardSuitEnum newSuit, CardValueEnum newValue) {
+        
+        string resourcePath = "Materials/Cards/Cards/Textures/"; // Path to the folder
 
-        switch (suit) {
+        switch(newValue) // Find and append card's value to resource load path, ace and picture card use strings
+        {
+            case CardValueEnum.TWO:
+                resourcePath += 2;
+                break;
+            case CardValueEnum.THREE:
+                resourcePath += 3;
+                break;
+            case CardValueEnum.FOUR:
+                resourcePath += 4;
+                break;
+            case CardValueEnum.FIVE:
+                resourcePath += 5;
+                break;
+            case CardValueEnum.SIX:
+                resourcePath += 6;
+                break;
+            case CardValueEnum.SEVEN:
+                resourcePath += 7;
+                break;
+            case CardValueEnum.EIGHT:
+                resourcePath += 8;
+                break;
+            case CardValueEnum.NINE:
+                resourcePath += 9;
+                break;
+            case CardValueEnum.JACK:
+                resourcePath += "J";
+                break;
+            case CardValueEnum.QUEEN:
+                resourcePath += "Q";
+                break;
+            case CardValueEnum.KING:
+                resourcePath += "K";
+                break;
+            case CardValueEnum.ACE:
+                resourcePath += "ACE";
+                break;
+            case CardValueEnum.TEN:
+                resourcePath += 10;
+                break;
+            default:
+                Debug.Log($"SetCardFace called with invalid value! {newValue}");
+                break;
+        }
+
+        Value = newValue;
+
+        switch (newSuit) { // Find and append suit to resource load path
             case CardSuitEnum.Hearts:
                 resourcePath += "ofHearts";
                 break;
@@ -51,11 +111,23 @@ public class Card : MonoBehaviour
             case CardSuitEnum.Clubs:
                 resourcePath += "ofClubs";
                 break;
-            default:
+            default: // Should be impossible to reach this
+                Debug.Log($"SetCardFace called with invalid suit! {newSuit}");
                 break;
         }
 
-        Material cardMaterial = Resources.Load(resourcePath) as Material;
-        cardRenderer.material = cardMaterial;
+        Suit = newSuit;
+
+        Sprite cardSprite = Resources.Load<Sprite>(resourcePath);
+
+        Debug.Log(cardSprite);
+        
+        if(cardSprite && IsFaceUp) // Safeguard against missing or misnamed sprites, don't change if face down
+        {
+            Img.sprite = cardSprite;
+        } else {
+            Debug.Log($"Card sprite not found with path: {resourcePath}");
+        }
+        
     }
 }

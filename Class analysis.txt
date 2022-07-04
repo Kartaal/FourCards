@@ -1,0 +1,59 @@
+Card:
+	Suit
+	Value
+	IsFaceUp
+	Face, Back [sprites]
+	
+	Flip
+	SetCardFace
+
+Deck:
+	stack of cards
+	
+	peek top card
+	peek count of matching value cards
+	push top card
+	push multiple cards
+	pop card
+
+Final card sets:
+	Face down card
+	Face up card
+	
+	pop first card
+	has top card
+
+Player:
+	Hand (deck)
+	4 final card sets
+	
+	Select/Deselect card
+	Play cards (pop cards from hand)
+	Draw new cards
+	Peek top matching cards in played pile
+	
+Game:
+	Player
+	AI
+	Deck
+	Discard pile
+	Played pile
+	
+	Clear played pile
+	Swap turn
+	Give player cards
+	Give player played pile
+	Play new card from deck
+	Shuffle deck
+	
+AI:
+	Somehow needs to...
+		Find lowest value valid card (in hand/final sets)
+		Play cards
+		Draw played pile
+		Draw new cards
+		
+		--
+		Find if clear can be played
+		Find random valid card(s)
+		
