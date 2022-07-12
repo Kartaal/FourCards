@@ -11,8 +11,8 @@ public class Card : MonoBehaviour
     [SerializeField] Sprite Back;
 
     private Image Img;
-    private CardSuitEnum Suit;
-    private CardValueEnum Value;
+    public CardSuitEnum Suit { get; private set; }
+    public CardValueEnum Value { get; private set; }
     private bool IsFaceUp = true;
 
     int frame = 0;
@@ -119,8 +119,6 @@ public class Card : MonoBehaviour
         Suit = newSuit;
 
         Sprite cardSprite = Resources.Load<Sprite>(resourcePath);
-
-        Debug.Log(cardSprite);
         
         if(cardSprite && IsFaceUp) // Safeguard against missing or misnamed sprites, don't change if face down
         {

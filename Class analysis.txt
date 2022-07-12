@@ -34,10 +34,13 @@ Player:
 	
 Game:
 	Player
+	Player's hand
 	AI
+	AI's hand
 	Deck
 	Discard pile
 	Played pile
+	All card objects
 	
 	Clear played pile
 	Swap turn
