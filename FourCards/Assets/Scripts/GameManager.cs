@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] Card _CardPrefab;
 
     List<GameObject> AllCardObjects = new List<GameObject>();
-    bool isPlayersTurn = true;
+    bool IsPlayersTurn = true;
 
     private void Awake() {
         GenerateCards();
@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
                 Deck.Push(card);
                 
                 AllCardObjects.Add(card.gameObject);
-                TransformCardToFitDeck(card);
+                TransformCardToFitDeck(card, Deck);
             }
         }
 
@@ -65,11 +65,11 @@ public class GameManager : MonoBehaviour
         PlayedPile.Clear();
     }
 
-    public void DrawPlayerCardDebug(int count) {
+    public void _DebugDrawPlayerCard(int count) {
         PlayerDrawCards("Player", count);
     }
 
-    public void DrawAICardDebug(int count) {
+    public void _DebugDrawAICard(int count) {
         PlayerDrawCards("AI", count);
     }
 
@@ -97,15 +97,29 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void _DebugPlayFirstCardPlayer() {
+        List<Card> card = PlayerHand.Pop();
 
-    void TransformCardToFitDeck(Card card) {
+        PlayCards(card);
+    }
+
+    public void PlayCards(List<Card> cards) {
+        foreach (Card card in cards)
+        {
+            PlayedPile.Push(card);
+            TransformCardToFitDeck(card, PlayedPile);
+        }
+    }
+
+
+    void TransformCardToFitDeck(Card card, DeckController deck) {
         RectTransform cardTransform = card.gameObject.transform as RectTransform;
 
         // Ensure card object belongs to deck in hierarchy and visually
-        cardTransform.SetParent(Deck.gameObject.transform, false);
-        
-        cardTransform.anchorMin = new Vector2(0.5f, 0.5f);
-        cardTransform.anchorMax = new Vector2(0.5f, 0.5f);
+        cardTransform.SetParent(deck.gameObject.transform, false);
+
+        // Need to set parent first for objects handled by layout groups - position is overridden
+        cardTransform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
         
         cardTransform.localScale = new Vector3(1f, 1f, 1f);
     }
@@ -115,9 +129,6 @@ public class GameManager : MonoBehaviour
         RectTransform _prefab = _CardPrefab.gameObject.transform as RectTransform;
         
         cardTransform.SetParent(hand.gameObject.transform, false);
-        
-        cardTransform.anchorMin = _prefab.anchorMin;
-        cardTransform.anchorMax = _prefab.anchorMax;
         
         cardTransform.localScale = _prefab.localScale;
     }
