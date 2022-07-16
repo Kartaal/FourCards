@@ -10,8 +10,16 @@ using static CardSuitEnum;
 public class DeckController : MonoBehaviour
 {
     [SerializeField] bool DisplayDebug;
+    GroupLayoutController LayoutController;
 
     List<Card> Cards = new List<Card>();
+
+    private void Awake() {
+        GroupLayoutController layoutCtrl = GetComponent<GroupLayoutController>();
+
+        if(layoutCtrl)
+            LayoutController = layoutCtrl;
+    }
 
     public Card Peek() {
         return Cards[Cards.Count-1];
@@ -40,13 +48,17 @@ public class DeckController : MonoBehaviour
     }
 
     public void Push(Card newCard) {
-        Cards.Add(newCard);
+        PushMultiple(new List<Card>() {newCard});
     }
 
     public void PushMultiple(List<Card> newCards) {
         foreach (Card card in newCards)
         {
             Cards.Add(card);
+        }
+
+        if(LayoutController != null) {
+            LayoutController.UpdateSpacing(Cards.Count);
         }
     }
 

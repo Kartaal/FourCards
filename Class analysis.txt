@@ -15,6 +15,10 @@ Deck:
 	push top card
 	push multiple cards
 	pop card
+	pop multiple cards
+	pop specific cards (playing from hand)
+	shuffle cards
+	clear stack of cards
 
 Final card sets:
 	Face down card

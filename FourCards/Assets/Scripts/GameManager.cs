@@ -21,7 +21,13 @@ public class GameManager : MonoBehaviour
     bool IsPlayersTurn = true;
 
     private void Awake() {
+        InitGame();
+    }
+
+    private void InitGame() {
         GenerateCards();
+        // DealFaceUpSets();
+        DealHands();
     }
 
     private void GenerateCards() {
@@ -53,6 +59,12 @@ public class GameManager : MonoBehaviour
         Deck.Shuffle();
     }
 
+    private void DealHands() {
+        // Debug.Log("Starting hand dealing...");
+        PlayerDrawCards("Player", 4);
+        PlayerDrawCards("AI", 4);
+    }
+
     private void ClearDeck() {
         Deck.Clear();
     }
@@ -80,6 +92,11 @@ public class GameManager : MonoBehaviour
         // Assign them correctly to player or AI
         if(id == "Player")
         {
+            // Debug.Log($"Player getting {drawn.Count} cards");
+            // foreach (var card in drawn)
+            // {
+            //     Debug.Log($"Card: {card.Value} of {card.Suit}");
+            // }
             PlayerHand.PushMultiple(drawn);
 
             foreach (Card card in drawn)
@@ -87,10 +104,12 @@ public class GameManager : MonoBehaviour
                 TransformCardToFitHand(card, PlayerHand);
             }
         } else {
+            // Debug.Log($"AI getting {drawn.Count} cards");
             AIHand.PushMultiple(drawn);
 
             foreach (Card card in drawn)
             {
+                // Debug.Log($"Card: {card.Value} of {card.Suit}");
                 TransformCardToFitHand(card, AIHand);
                 card.FlipCard();
             }
