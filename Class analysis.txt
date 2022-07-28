@@ -21,11 +21,14 @@ Deck:
 	clear stack of cards
 
 Final card sets:
-	Face down card
-	Face up card
+	Bottom card
+	Top card
 	
-	pop first card
+	pop card
 	has top card
+	set top card
+	set bottom card
+	has card
 
 Player:
 	Hand (deck)
@@ -35,6 +38,9 @@ Player:
 	Play cards (pop cards from hand)
 	Draw new cards
 	Peek top matching cards in played pile
+	
+	init final sets
+	find card in final set
 	
 Game:
 	Player

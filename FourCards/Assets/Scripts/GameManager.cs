@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
 
     private void InitGame() {
         GenerateCards();
-        // DealFaceUpSets();
+        DealFaceUpSets();
         DealHands();
     }
 
@@ -63,6 +63,14 @@ public class GameManager : MonoBehaviour
         // Debug.Log("Starting hand dealing...");
         PlayerDrawCards("Player", 4);
         PlayerDrawCards("AI", 4);
+    }
+
+    private void DealFaceUpSets() {
+        List<Card> PlayerEight = Deck.PopMultiple(8);
+        List<Card> AIEight = Deck.PopMultiple(8);
+
+        Player.InitFinalSets(PlayerEight);
+        // AI.InitFinalSets(AIEight);
     }
 
     private void ClearDeck() {

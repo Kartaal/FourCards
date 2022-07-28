@@ -13,7 +13,7 @@ public class Card : MonoBehaviour
     private Image Img;
     public CardSuitEnum Suit { get; private set; }
     public CardValueEnum Value { get; private set; }
-    private bool IsFaceUp = true;
+    public bool IsFaceUp { get; private set; } = true;
 
     int frame = 0;
 
