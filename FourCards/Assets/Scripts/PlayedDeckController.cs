@@ -6,7 +6,7 @@ using static CardValueEnum;
 
 public class PlayedDeckController : DeckController
 {
-    public void PushMultiple(List<Card> newCards) {
+    public override void PushMultiple(List<Card> newCards) {
         int foursCounter = 0;
 
         base.PushMultiple(newCards); // Push the cards as normal

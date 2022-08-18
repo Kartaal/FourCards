@@ -1381,11 +1381,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Deck: {fileID: 8208030616357893056}
-  DiscardPile: {fileID: 1959026030}
-  PlayedPile: {fileID: 8208030617313753600}
+  DiscardDeck: {fileID: 0}
+  PlayedDeck: {fileID: 0}
   Player: {fileID: 1657572853}
-  PlayerHand: {fileID: 1000589304}
-  AIHand: {fileID: 1997683802}
+  PlayerHand: {fileID: 0}
+  AIHand: {fileID: 0}
   _CardPrefab: {fileID: 8208030616366477341, guid: d3fab9cfbcb4f0d42adc16981842c3b4, type: 3}
 --- !u!4 &757875968
 Transform:
@@ -1807,8 +1807,8 @@ GameObject:
   - component: {fileID: 1000589302}
   - component: {fileID: 1000589301}
   - component: {fileID: 1000589303}
-  - component: {fileID: 1000589304}
   - component: {fileID: 1000589305}
+  - component: {fileID: 1000589304}
   m_Layer: 5
   m_Name: PlayerHand
   m_TagString: Untagged
@@ -1909,10 +1909,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000589299}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 579b02c8d36dd974b877aa25184185d3, type: 3}
+  m_Script: {fileID: 11500000, guid: 1aba09876e282cd47ac13b6aa139db5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   DisplayDebug: 0
+  Manager: {fileID: 757875967}
 --- !u!114 &1000589305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3720,6 +3721,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DisplayDebug: 0
+  Manager: {fileID: 0}
 --- !u!1 &1997683797
 GameObject:
   m_ObjectHideFlags: 0
@@ -3732,8 +3734,8 @@ GameObject:
   - component: {fileID: 1997683801}
   - component: {fileID: 1997683800}
   - component: {fileID: 1997683799}
-  - component: {fileID: 1997683802}
   - component: {fileID: 1997683803}
+  - component: {fileID: 1997683802}
   m_Layer: 5
   m_Name: AIHand
   m_TagString: Untagged
@@ -3834,10 +3836,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1997683797}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 579b02c8d36dd974b877aa25184185d3, type: 3}
+  m_Script: {fileID: 11500000, guid: 1aba09876e282cd47ac13b6aa139db5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   DisplayDebug: 0
+  Manager: {fileID: 757875967}
 --- !u!114 &1997683803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4183,6 +4186,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DisplayDebug: 1
+  Manager: {fileID: 757875967}
 --- !u!114 &8208030617313753596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4268,10 +4272,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8208030617313753598}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 579b02c8d36dd974b877aa25184185d3, type: 3}
+  m_Script: {fileID: 11500000, guid: bea1e15c4d5296f48b596f335d4c8cd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   DisplayDebug: 0
+  Manager: {fileID: 757875967}
 --- !u!1001 &8208030617847999217
 PrefabInstance:
   m_ObjectHideFlags: 0

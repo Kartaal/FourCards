@@ -26,7 +26,7 @@ public class DeckController : MonoBehaviour
         PushMultiple(new List<Card>() {newCard});
     }
 
-    public void PushMultiple(List<Card> newCards) {
+    public virtual void PushMultiple(List<Card> newCards) {
         foreach (Card card in newCards)
         {
             Cards.Add(card);

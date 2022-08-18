@@ -12,13 +12,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] DeckController DiscardDeck;
     [SerializeField] PlayedDeckController PlayedDeck;
     [SerializeField] PlayerController Player;
-    [SerializeField] DeckController PlayerHand;
+    [SerializeField] HandDeckController PlayerHand;
     // [SerializeField] AIController AI;
-    [SerializeField] DeckController AIHand;
+    [SerializeField] HandDeckController AIHand;
     [SerializeField] Card _CardPrefab;
 
     List<GameObject> AllCardObjects = new List<GameObject>();
-    bool IsPlayersTurn = true;
 
     private void Awake() {
         InitGame();
