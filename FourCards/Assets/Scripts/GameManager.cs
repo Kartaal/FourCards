@@ -9,8 +9,8 @@ using static CardSuitEnum;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] DeckController Deck;
-    [SerializeField] DeckController DiscardPile;
-    [SerializeField] DeckController PlayedPile;
+    [SerializeField] DeckController DiscardDeck;
+    [SerializeField] PlayedDeckController PlayedDeck;
     [SerializeField] PlayerController Player;
     [SerializeField] DeckController PlayerHand;
     // [SerializeField] AIController AI;
@@ -73,16 +73,24 @@ public class GameManager : MonoBehaviour
         // AI.InitFinalSets(AIEight);
     }
 
+    public void DiscardCards(List<Card> cardsToDiscard, GameObject source) {
+        if(source.name == "PlayedDeck")
+        {
+            DiscardDeck.PushMultiple(cardsToDiscard);
+            ClearDiscard();
+        }
+    }
+
     private void ClearDeck() {
         Deck.Clear();
     }
 
     private void ClearDiscard() {
-        DiscardPile.Clear();
+        DiscardDeck.Clear();
     }
 
     private void ClearPlayed() {
-        PlayedPile.Clear();
+        PlayedDeck.Clear();
     }
 
     public void _DebugDrawPlayerCard(int count) {
@@ -133,8 +141,8 @@ public class GameManager : MonoBehaviour
     public void PlayCards(List<Card> cards) {
         foreach (Card card in cards)
         {
-            PlayedPile.Push(card);
-            TransformCardToFitDeck(card, PlayedPile);
+            PlayedDeck.Push(card);
+            TransformCardToFitDeck(card, PlayedDeck);
         }
     }
 

@@ -3295,6 +3295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fea8d326d38646c499a37a531161c52e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Deck: {fileID: 0}
 --- !u!1 &1676793231
 GameObject:
   m_ObjectHideFlags: 0
@@ -3643,7 +3644,7 @@ GameObject:
   - component: {fileID: 1959026028}
   - component: {fileID: 1959026030}
   m_Layer: 5
-  m_Name: DiscardPile
+  m_Name: DiscardDeck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4233,7 +4234,7 @@ GameObject:
   - component: {fileID: 8208030617313753596}
   - component: {fileID: 8208030617313753600}
   m_Layer: 5
-  m_Name: PlayedPile
+  m_Name: PlayedDeck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

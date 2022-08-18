@@ -10,41 +10,16 @@ using static CardSuitEnum;
 public class DeckController : MonoBehaviour
 {
     [SerializeField] bool DisplayDebug;
+    [SerializeField] protected GameManager Manager;
     GroupLayoutController LayoutController;
 
-    List<Card> Cards = new List<Card>();
+    protected List<Card> Cards = new List<Card>();
 
     private void Awake() {
         GroupLayoutController layoutCtrl = GetComponent<GroupLayoutController>();
 
         if(layoutCtrl)
             LayoutController = layoutCtrl;
-    }
-
-    public Card Peek() {
-        return Cards[Cards.Count-1];
-    }
-
-    public (Card, int) PeekMatching() {
-        int index = Cards.Count - 1;
-        Card topCard = Cards[index];
-        CardValueEnum value = topCard.Value;
-
-        Card toLookAt = Cards[index];
-        int count = 0;
-
-        while(toLookAt.Value == topCard.Value)
-        {
-            count++;
-            toLookAt = Cards[--index];
-        }
-
-        if(DisplayDebug)
-        {
-            Debug.Log($"Peeking matching in deck... found {count} of {value}");
-        }
-
-        return (topCard, count);
     }
 
     public void Push(Card newCard) {
@@ -145,5 +120,31 @@ public class DeckController : MonoBehaviour
 
     public void Clear() {
         Cards.Clear();
+    }
+
+    public Card Peek() {
+        return Cards[Cards.Count-1];
+    }
+
+    public (Card, int) PeekMatching() {
+        int index = Cards.Count - 1;
+        Card topCard = Cards[index];
+        CardValueEnum value = topCard.Value;
+
+        Card toLookAt = Cards[index];
+        int count = 0;
+
+        while(toLookAt.Value == topCard.Value)
+        {
+            count++;
+            toLookAt = Cards[--index];
+        }
+
+        if(DisplayDebug)
+        {
+            Debug.Log($"Peeking matching in deck... found {count} of {value}");
+        }
+
+        return (topCard, count);
     }
 }
