@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static CardValueEnum;
 using static CardSuitEnum;
+using static GameStateEnum;
 
 
 public class GameManager : MonoBehaviour
@@ -12,12 +13,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] DeckController DiscardDeck;
     [SerializeField] PlayedDeckController PlayedDeck;
     [SerializeField] PlayerController Player;
-    [SerializeField] HandDeckController PlayerHand;
+    // // [SerializeField] HandDeckController PlayerHand;
     // [SerializeField] AIController AI;
     [SerializeField] HandDeckController AIHand;
     [SerializeField] Card _CardPrefab;
 
     List<GameObject> AllCardObjects = new List<GameObject>();
+    public static GameStateEnum GameState = Init;
 
     private void Awake() {
         InitGame();
@@ -27,6 +29,7 @@ public class GameManager : MonoBehaviour
         GenerateCards();
         DealFaceUpSets();
         DealHands();
+        GameState = SwappingCards; // Make function for this
     }
 
     private void GenerateCards() {
@@ -51,7 +54,7 @@ public class GameManager : MonoBehaviour
                 Deck.Push(card);
                 
                 AllCardObjects.Add(card.gameObject);
-                TransformCardToFitDeck(card, Deck);
+                // TransformCardToFitDeck(card, Deck);
             }
         }
 
@@ -112,27 +115,22 @@ public class GameManager : MonoBehaviour
             // {
             //     Debug.Log($"Card: {card.Value} of {card.Suit}");
             // }
-            PlayerHand.PushMultiple(drawn);
-
-            foreach (Card card in drawn)
-            {
-                TransformCardToFitHand(card, PlayerHand);
-            }
+            Player.AddCardsToHand(drawn);
         } else {
             // Debug.Log($"AI getting {drawn.Count} cards");
-            AIHand.PushMultiple(drawn);
+            AIHand.PushMultiple(drawn);     // QQQ Fix this so it uses the AI controller
+            // AI.AddCardsToHand(drawn);
 
             foreach (Card card in drawn)
             {
                 // Debug.Log($"Card: {card.Value} of {card.Suit}");
-                TransformCardToFitHand(card, AIHand);
                 card.FlipCard();
             }
         }
     }
 
     public void _DebugPlayFirstCardPlayer() {
-        List<Card> card = PlayerHand.Pop();
+        List<Card> card = Player._DebugPopFirstCard();
 
         PlayCards(card);
     }
@@ -141,29 +139,7 @@ public class GameManager : MonoBehaviour
         foreach (Card card in cards)
         {
             PlayedDeck.Push(card);
-            TransformCardToFitDeck(card, PlayedDeck);
+            // TransformCardToFitDeck(card, PlayedDeck);
         }
-    }
-
-
-    void TransformCardToFitDeck(Card card, DeckController deck) {
-        RectTransform cardTransform = card.gameObject.transform as RectTransform;
-
-        // Ensure card object belongs to deck in hierarchy and visually
-        cardTransform.SetParent(deck.gameObject.transform, false);
-
-        // Need to set parent first for objects handled by layout groups - position is overridden
-        cardTransform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
-        
-        cardTransform.localScale = new Vector3(1f, 1f, 1f);
-    }
-
-    void TransformCardToFitHand(Card card, DeckController hand) {
-        RectTransform cardTransform = card.gameObject.transform as RectTransform;
-        RectTransform _prefab = _CardPrefab.gameObject.transform as RectTransform;
-        
-        cardTransform.SetParent(hand.gameObject.transform, false);
-        
-        cardTransform.localScale = _prefab.localScale;
     }
 }

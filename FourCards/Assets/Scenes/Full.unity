@@ -1381,11 +1381,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Deck: {fileID: 8208030616357893056}
-  DiscardDeck: {fileID: 0}
-  PlayedDeck: {fileID: 0}
+  DiscardDeck: {fileID: 1959026030}
+  PlayedDeck: {fileID: 8208030617313753600}
   Player: {fileID: 1657572853}
-  PlayerHand: {fileID: 0}
-  AIHand: {fileID: 0}
+  AIHand: {fileID: 1997683802}
   _CardPrefab: {fileID: 8208030616366477341, guid: d3fab9cfbcb4f0d42adc16981842c3b4, type: 3}
 --- !u!4 &757875968
 Transform:
@@ -1914,6 +1913,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DisplayDebug: 0
   Manager: {fileID: 757875967}
+  _CardPrefab: {fileID: 8208030616366477341, guid: d3fab9cfbcb4f0d42adc16981842c3b4, type: 3}
 --- !u!114 &1000589305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3296,7 +3296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fea8d326d38646c499a37a531161c52e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Deck: {fileID: 0}
+  Hand: {fileID: 1000589304}
 --- !u!1 &1676793231
 GameObject:
   m_ObjectHideFlags: 0
@@ -3841,6 +3841,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DisplayDebug: 0
   Manager: {fileID: 757875967}
+  _CardPrefab: {fileID: 8208030616366477341, guid: d3fab9cfbcb4f0d42adc16981842c3b4, type: 3}
 --- !u!114 &1997683803
 MonoBehaviour:
   m_ObjectHideFlags: 0

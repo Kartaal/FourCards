@@ -30,6 +30,7 @@ public class DeckController : MonoBehaviour
         foreach (Card card in newCards)
         {
             Cards.Add(card);
+            TransformCardToFitDeck(card);
         }
 
         if(LayoutController != null) {
@@ -121,6 +122,28 @@ public class DeckController : MonoBehaviour
     public void Clear() {
         Cards.Clear();
     }
+
+    private void TransformCardsToFitDeck(List<Card> cards) {
+        foreach (Card card in cards)
+        {
+            TransformCardToFitDeck(card);
+        }
+    }
+
+    private void TransformCardToFitDeck(Card card) {
+        RectTransform cardTransform = card.gameObject.transform as RectTransform;
+
+        // Ensure card object belongs to deck in hierarchy and visually
+        cardTransform.SetParent(gameObject.transform, false);
+
+        // Need to set parent first for objects handled by layout groups - position is overridden
+        cardTransform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+        
+        cardTransform.localScale = new Vector3(1f, 1f, 1f);
+    }
+
+
+
 
     public Card Peek() {
         return Cards[Cards.Count-1];

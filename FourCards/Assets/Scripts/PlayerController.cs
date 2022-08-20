@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] DeckController Deck;
+    [SerializeField] HandDeckController Hand;
     FinalSet[] FinalSets;
 
 
@@ -22,8 +22,8 @@ public class PlayerController : MonoBehaviour
                 int setIndex = index / 2; // Finds the index in the array, two cards per set
                 int cardIndex = index % 2;
 
-                Debug.Log($"Set index: {setIndex}");
-                Debug.Log($"Card index: {cardIndex}");
+                // Debug.Log($"Set index: {setIndex}");
+                // Debug.Log($"Card index: {cardIndex}");
 
                 if(cardIndex == 0) { // QQQQQ -- Should find a way to clean this up 
                     FinalSets[setIndex].SetTopCard(cards[index]);
@@ -42,5 +42,18 @@ public class PlayerController : MonoBehaviour
         }
 
         return null; // Didn't find the card in any set
+    }
+
+    public void AddCardsToHand(List<Card> newCards) {
+        Hand.PushMultiple(newCards);
+        Hand.SortDeck();
+    }
+
+    public List<Card> _DebugPopFirstCard() {
+        Card card = Hand.Pop()[0]; // Ugly as shit
+        List<Card> list = new List<Card>();
+        list.Add(card);
+
+        return list;
     }
 }
