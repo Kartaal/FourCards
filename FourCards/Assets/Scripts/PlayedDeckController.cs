@@ -19,14 +19,16 @@ public class PlayedDeckController : DeckController
         }
 
         // Check top four cards for being four of a kind
-        for (int index = Cards.Count - 4; index < Cards.Count; index++)
-        {
-            Card checkCard = Cards[index];
-            if(checkCard.Value == newCards[0].Value)
+        if(Cards.Count > 3) {   // Don't actually check for four of a kind if there are less than 4 cards in pile
+            for (int index = Cards.Count - 4; index < Cards.Count; index++)
             {
-                foursCounter++;
-            } else { // If a card tested has a different value, can't have four of a kind
-                break;
+                Card checkCard = Cards[index];
+                if(checkCard.Value == newCards[0].Value)
+                {
+                    foursCounter++;
+                } else { // If a card tested has a different value, can't have four of a kind
+                    break;
+                }
             }
         }
 

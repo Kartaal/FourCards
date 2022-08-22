@@ -11,14 +11,21 @@ public class Card : MonoBehaviour
     [SerializeField] Sprite Back;
 
     private Image Img;
-    public CardSuitEnum Suit { get; private set; }
-    public CardValueEnum Value { get; private set; }
+    private Outline Outline;
+    [SerializeField] public CardSuitEnum Suit { get; private set; }
+    [SerializeField] public CardValueEnum Value { get; private set; }
     public bool IsFaceUp { get; private set; } = true;
-
-    int frame = 0;
+    public bool IsSelected { get; private set; } = false;
 
     private void Awake() {
         Img = gameObject.GetComponent<Image>();
+        Outline = gameObject.GetComponent<Outline>();
+
+        Outline.enabled = false;
+
+        // Debug.Log($"Card face up: {IsFaceUp}");
+        FlipCard();
+        // Debug.Log($"After awake flip) Card face up: {IsFaceUp}");
     }
 
     private void Update() {
@@ -35,6 +42,7 @@ public class Card : MonoBehaviour
     }
 
     public void FlipCard() {
+        // Debug.Log($"Flipping card... face up is {IsFaceUp} - sprite is Face? {Img.sprite == Face}");
         if(IsFaceUp)
         {
             Img.sprite = Back;
@@ -43,7 +51,11 @@ public class Card : MonoBehaviour
             Img.sprite = Face;
             IsFaceUp = !IsFaceUp;
         }
+    }
 
+    public void ToggleOutline() {
+        Outline.enabled = !Outline.enabled;
+        IsSelected = !IsSelected;
     }
 
     public void SetCardFace(CardSuitEnum newSuit, CardValueEnum newValue) {
@@ -120,9 +132,11 @@ public class Card : MonoBehaviour
 
         Sprite cardSprite = Resources.Load<Sprite>(resourcePath);
         
-        if(cardSprite && IsFaceUp) // Safeguard against missing or misnamed sprites, don't change if face down
+        if(cardSprite) // Safeguard against missing or misnamed sprites
         {
+            // Debug.Log($"Card given sprite with resource path <{resourcePath}>");
             Img.sprite = cardSprite;
+            Face = cardSprite;
         } else {
             Debug.Log($"Card sprite not found with path: {resourcePath}");
         }

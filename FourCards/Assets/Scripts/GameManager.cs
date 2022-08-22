@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     List<GameObject> AllCardObjects = new List<GameObject>();
     public static GameStateEnum GameState = Init;
 
-    private void Awake() {
+    private void Start() {
         InitGame();
     }
 
@@ -73,6 +73,12 @@ public class GameManager : MonoBehaviour
 
         Player.InitFinalSets(PlayerEight);
         // AI.InitFinalSets(AIEight);
+
+        // For debugging things...
+        foreach (Card AICard in AIEight)
+        {
+            Destroy(AICard.gameObject);
+        }
     }
 
     public void DiscardCards(List<Card> cardsToDiscard, GameObject source) {
@@ -105,6 +111,8 @@ public class GameManager : MonoBehaviour
 
     public void PlayerDrawCards(string id, int count) {
         // Draw the cards from the deck
+        // Debug.Log($"Drawing cards for player, {Deck.ReturnRemainingCardCount()} remaining...");
+        count = Math.Min(Deck.ReturnRemainingCardCount(), count);
         List<Card> drawn = Deck.PopMultiple(count);
 
         // Assign them correctly to player or AI
@@ -114,6 +122,7 @@ public class GameManager : MonoBehaviour
             // foreach (var card in drawn)
             // {
             //     Debug.Log($"Card: {card.Value} of {card.Suit}");
+                // Debug.Log($"Player card face up: {card.IsFaceUp}");
             // }
             Player.AddCardsToHand(drawn);
         } else {
@@ -123,6 +132,7 @@ public class GameManager : MonoBehaviour
 
             foreach (Card card in drawn)
             {
+                // Debug.Log($"AI card face up: {card.IsFaceUp}");
                 // Debug.Log($"Card: {card.Value} of {card.Suit}");
                 card.FlipCard();
             }

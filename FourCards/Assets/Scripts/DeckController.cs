@@ -43,21 +43,25 @@ public class DeckController : MonoBehaviour
     }
 
     public List<Card> PopMultiple(int count) {
+        // Debug.Log($"Popping {count} cards from {gameObject.name} with {Cards.Count} remaining");
         // Ensure not popping more than count
-        if(count > Cards.Count)
-        {
-            count = Cards.Count;
-        }
+        count = Math.Min(Cards.Count, count);
 
         List<Card> poppedCards = new List<Card>();
-        while (count > 0)
+        while (count > 0 && Cards.Count > 0)
         {
+            // Debug.Log($"Fiddling while index is {Cards.Count-1}");
             Card card = Cards[Cards.Count-1];
-            Cards.RemoveAt(Cards.Count - 1);
+            Cards.RemoveAt(Cards.Count-1);
+
+            if(Cards.Count > 0)
+                Cards[Cards.Count-1].FlipCard();
 
             poppedCards.Add(card);
             count--;
         }
+
+        // Debug.Log($"After popping... {Cards.Count} cards remaining");
 
         return poppedCards;
     }
@@ -106,6 +110,19 @@ public class DeckController : MonoBehaviour
             Cards[j] = temp;
         }
 
+        // Remember to update the game object ordering to match the shuffled list
+        for (int index = 0; index < Cards.Count; index++)
+        {
+            Card card = Cards[index];
+            RectTransform cardTransform = card.transform as RectTransform;
+
+            cardTransform.SetSiblingIndex(index);
+            if(card.IsFaceUp) {
+                card.FlipCard();
+            }
+        }
+        Cards[Cards.Count-1].FlipCard();
+
         // if(DisplayDebug)
         // {
         //     List<(CardSuitEnum, CardValueEnum)> displayList = new List<(CardSuitEnum, CardValueEnum)>();
@@ -121,6 +138,10 @@ public class DeckController : MonoBehaviour
 
     public void Clear() {
         Cards.Clear();
+    }
+
+    public int ReturnRemainingCardCount() {
+        return Cards.Count;
     }
 
     private void TransformCardsToFitDeck(List<Card> cards) {

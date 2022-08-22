@@ -10,8 +10,6 @@ Card:
 Deck:
 	stack of cards
 	
-	peek top card
-	peek count of matching value cards
 	push top card
 	push multiple cards
 	pop card
@@ -19,6 +17,12 @@ Deck:
 	pop specific cards (playing from hand)
 	shuffle cards
 	clear stack of cards
+	
+Hand Deck - Deck:
+	
+	
+Played Deck - Deck:
+	
 
 Final card sets:
 	Bottom card
@@ -37,23 +41,21 @@ Player:
 	Select/Deselect card
 	Play cards (pop cards from hand)
 	Draw new cards
-	Peek top matching cards in played pile
+	Swap cards (selected from final set and hand)
 	
 	init final sets
 	find card in final set
 	
 Game:
 	Player
-	Player's hand
 	AI
-	AI's hand
 	Deck
 	Discard pile
 	Played pile
 	All card objects
+	Game state
 	
 	Clear played pile
-	Swap turn
 	Give player cards
 	Give player played pile
 	Play new card from deck
