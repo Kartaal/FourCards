@@ -41,29 +41,41 @@ public class PlayerController : MonoBehaviour
             int index = 0;
             while(hitCard == null && index < results.Count)
             {
+                // Loop through UI elements until finding a card or running out of objects
                 GameObject GO = results[index++].gameObject;
                 hitCard = GO.GetComponent<Card>();
 
                 if(GO && !hitCard) {
                     // Debug.Log($"Hit {GO.name} instead of card...");
                 } else {
-                    Debug.Log($"Value: {hitCard.Value} - Suit: {hitCard.Suit}");
+                    // Debug.Log($"Value: {hitCard.Value} - Suit: {hitCard.Suit}");
                 }
             }
 
             if(hitCard) {   // Only do card hit things if a card was actually hit and the rest of the game/UI wasn't clicked
-                if(!hitCard.IsSelected) {           // If the hit card isn't selected, add it to the selected card list and toggle the outline indicator on
-                    SelectedCards.Add(hitCard);
-                    hitCard.ToggleOutline();
-                } else {                            // If the hit card is selected, remove it from the selected card list and toggle the outline indicator off
-                    SelectedCards.Remove(hitCard);
-                    hitCard.ToggleOutline();
+                Transform cardTransform = hitCard.transform;
+
+                // Loop through parents to ensure this card belongs to the player
+                while (cardTransform.parent.gameObject != this.gameObject && cardTransform.parent.gameObject.GetComponent<Canvas>() == null)
+                {
+                    cardTransform = cardTransform.parent;
                 }
 
-                Debug.Log($"Cards currently selected:");
-                foreach (Card sCard in SelectedCards)
-                {
-                    Debug.Log($"Suit: {sCard.Suit} - Value: {sCard.Value}");
+                // If the parent of the current 'card' is a canvas, this 'card' does not have this player controller as a parent
+                if(cardTransform.parent.gameObject.GetComponent<Canvas>() == null) {
+                    if(!hitCard.IsSelected) {           // If the hit card isn't selected, add it to the selected card list and toggle the outline indicator on
+                        SelectedCards.Add(hitCard);
+                        hitCard.ToggleOutline();
+                    } else {                            // If the hit card is selected, remove it from the selected card list and toggle the outline indicator off
+                        SelectedCards.Remove(hitCard);
+                        hitCard.ToggleOutline();
+                    }
+
+                    Debug.Log($"Cards currently selected:");
+                    foreach (Card sCard in SelectedCards)
+                    {
+                        Debug.Log($"Suit: {sCard.Suit} - Value: {sCard.Value}");
+                    }
                 }
             }
         }
