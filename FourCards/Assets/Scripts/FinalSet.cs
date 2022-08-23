@@ -15,6 +15,7 @@ public class FinalSet : MonoBehaviour
         if(TopCard) {
             Card card = TopCard;
             TopCard = null;
+            BottomCard.FlipCard();
 
             return card;
         } else {
