@@ -52,4 +52,8 @@ public class HandDeckController : DeckController
             cardTransform.SetSiblingIndex(index);
         }
     }
+
+    public bool IsEmpty() {
+        return Cards.Count == 0;
+    }
 }

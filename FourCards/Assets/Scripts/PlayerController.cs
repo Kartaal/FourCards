@@ -56,25 +56,41 @@ public class PlayerController : MonoBehaviour
                 Transform cardTransform = hitCard.transform;
 
                 // Loop through parents to ensure this card belongs to the player
-                while (cardTransform.parent.gameObject != this.gameObject && cardTransform.parent.gameObject.GetComponent<Canvas>() == null)
+                while ( cardTransform.parent != null
+                    && cardTransform.parent.gameObject != this.gameObject 
+                )
                 {
                     cardTransform = cardTransform.parent;
                 }
 
-                // If the parent of the current 'card' is a canvas, this 'card' does not have this player controller as a parent
-                if(cardTransform.parent.gameObject.GetComponent<Canvas>() == null) {
-                    if(!hitCard.IsSelected) {           // If the hit card isn't selected, add it to the selected card list and toggle the outline indicator on
-                        SelectedCards.Add(hitCard);
-                        hitCard.ToggleOutline();
-                    } else {                            // If the hit card is selected, remove it from the selected card list and toggle the outline indicator off
-                        SelectedCards.Remove(hitCard);
-                        hitCard.ToggleOutline();
-                    }
+                // Only do card selection things with cards owned by player
+                if(cardTransform.parent && cardTransform.parent.gameObject == this.gameObject)
+                {
+                    // Debug.Log($"Hand empty? {Hand.IsEmpty()}");
+                    // Debug.Log($"Card transform name: {cardTransform.gameObject.name}");
 
-                    Debug.Log($"Cards currently selected:");
-                    foreach (Card sCard in SelectedCards)
+                    // Dumb hardcoding...
+                    if(cardTransform.gameObject.name == "PlayerHand" ||  // if card is in hand or...
+                        (
+                        Hand.IsEmpty() &&                                       // player's hand is empty
+                        cardTransform.gameObject.name == "FinalSets_P"          // and we're in final sets container
+                        )
+                    )
                     {
-                        Debug.Log($"Suit: {sCard.Suit} - Value: {sCard.Value}");
+                        // Toggle card selection
+                        if(!hitCard.IsSelected) {
+                            SelectedCards.Add(hitCard);
+                            hitCard.ToggleOutline();
+                        } else {
+                            SelectedCards.Remove(hitCard);
+                            hitCard.ToggleOutline();
+                        }
+
+                        Debug.Log($"{SelectedCards.Count} cards currently selected:");
+                        foreach (Card sCard in SelectedCards)
+                        {
+                            Debug.Log($"Suit: {sCard.Suit} - Value: {sCard.Value}");
+                        }
                     }
                 }
             }
