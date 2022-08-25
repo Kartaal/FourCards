@@ -66,6 +66,17 @@ public class DeckController : MonoBehaviour
         return poppedCards;
     }
 
+    public void RemoveSelected(List<Card> selected) {
+        foreach (Card card in selected)
+        {
+            if(Cards.Contains(card))
+                Cards.Remove(card);
+                if(card.IsSelected)
+                    card.ToggleOutline();
+        }
+    }
+
+    // Silly overkill function, pfft.
     public List<Card> PopSelected(List<Card> selected) {
         // Get all cards matching the suit and value (card) in selected list
         // Horrible handling with list but oh well

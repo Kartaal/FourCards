@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] GameManager Manager;
     [SerializeField] HandDeckController Hand;
     FinalSet[] FinalSets;
     List<Card> SelectedCards = new List<Card>();
@@ -53,6 +54,9 @@ public class PlayerController : MonoBehaviour
             }
 
             if(hitCard) {   // Only do card hit things if a card was actually hit and the rest of the game/UI wasn't clicked
+
+                // Just check if the card is in hand or in final sets -- FindCardInFinalSet(hitCard)
+
                 Transform cardTransform = hitCard.transform;
 
                 // Loop through parents to ensure this card belongs to the player
@@ -118,6 +122,15 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
+    public void PlaySelectedCards() {
+        Manager.PlayCards(SelectedCards);
+        Hand.RemoveSelected(SelectedCards);
+        
+        SelectedCards.Clear();
+    }
+
+    
 
     public FinalSet FindCardInFinalSet(Card card) {
         foreach (var set in FinalSets)
