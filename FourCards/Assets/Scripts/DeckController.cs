@@ -51,11 +51,11 @@ public class DeckController : MonoBehaviour
         while (count > 0 && Cards.Count > 0)
         {
             // Debug.Log($"Fiddling while index is {Cards.Count-1}");
-            Card card = Cards[Cards.Count-1];
+            Card card = Cards[^1];
             Cards.RemoveAt(Cards.Count-1);
 
-            if(Cards.Count > 0)
-                Cards[Cards.Count-1].FlipCard();
+            // if(Cards.Count > 0)
+            //     Cards[Cards.Count-1].FlipCard();
 
             poppedCards.Add(card);
             count--;
@@ -71,8 +71,8 @@ public class DeckController : MonoBehaviour
         {
             if(Cards.Contains(card))
                 Cards.Remove(card);
-                if(card.IsSelected)
-                    card.ToggleOutline();
+            if(card.IsSelected)
+                card.ToggleOutline();
         }
     }
 
@@ -132,7 +132,7 @@ public class DeckController : MonoBehaviour
                 card.FlipCard();
             }
         }
-        Cards[Cards.Count-1].FlipCard();
+        Cards[^1].FlipCard();
 
         // if(DisplayDebug)
         // {
@@ -178,7 +178,7 @@ public class DeckController : MonoBehaviour
 
 
     public Card Peek() {
-        return Cards[Cards.Count-1];
+        return Cards[^1];
     }
 
     public (Card, int) PeekMatching() {

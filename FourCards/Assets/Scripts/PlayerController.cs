@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
 
     // Fields for UI raycasting things
     PointerEventData m_PointerEventData;
-    [SerializeField]  GraphicRaycaster m_Raycaster;
+    [SerializeField] GraphicRaycaster m_Raycaster;
     [SerializeField] EventSystem m_EventSystem;
 
     private void Awake() {
@@ -40,17 +40,19 @@ public class PlayerController : MonoBehaviour
 
             Card hitCard = null;
             int index = 0;
-            while(hitCard == null && index < results.Count)
+            while(/*hitCard == null &&*/ index < results.Count)
             {
                 // Loop through UI elements until finding a card or running out of objects
                 GameObject GO = results[index++].gameObject;
                 hitCard = GO.GetComponent<Card>();
 
-                if(GO && !hitCard) {
-                    // Debug.Log($"Hit {GO.name} instead of card...");
-                } else {
-                    // Debug.Log($"Value: {hitCard.Value} - Suit: {hitCard.Suit}");
-                }
+                if (hitCard) break;
+
+                // if(GO && !hitCard) {
+                //     // Debug.Log($"Hit {GO.name} instead of card...");
+                // } else {
+                //     // Debug.Log($"Value: {hitCard.Value} - Suit: {hitCard.Suit}");
+                // }
             }
 
             if(hitCard) {   // Only do card hit things if a card was actually hit and the rest of the game/UI wasn't clicked
@@ -82,12 +84,16 @@ public class PlayerController : MonoBehaviour
                     )
                     {
                         // Toggle card selection
-                        if(!hitCard.IsSelected) {
-                            SelectedCards.Add(hitCard);
-                            hitCard.ToggleOutline();
-                        } else {
+                        if(hitCard.IsSelected) {
                             SelectedCards.Remove(hitCard);
                             hitCard.ToggleOutline();
+                        } else {
+                            // Select card if no existing cards are selected, or the values match
+                            if (SelectedCards.Count == 0 || hitCard.Value == SelectedCards[0].Value)
+                            {
+                                SelectedCards.Add(hitCard);
+                                hitCard.ToggleOutline();
+                            }
                         }
 
                         Debug.Log($"{SelectedCards.Count} cards currently selected:");

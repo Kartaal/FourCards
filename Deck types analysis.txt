@@ -1,0 +1,23 @@
+Deck
+	Push
+	Pop
+	Shuffle
+	IsEmpty
+	Clear
+
+Hand
+	Push
+	Pop
+	Sort
+	Clear
+
+Played
+	Push (special cases for 2, 10, fours)
+	Pop
+	Discard
+	TopIdentical
+	Clear
+
+Discard
+	Push
+	Clear
