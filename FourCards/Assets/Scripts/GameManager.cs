@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
         {
             foreach(CardValueEnum value in (CardValueEnum[])Enum.GetValues(typeof(CardValueEnum)))
             {
-                Card card = Instantiate<Card>(_CardPrefab, _CardPrefab.transform.position, Quaternion.identity);
+                Card card = Instantiate(_CardPrefab, _CardPrefab.transform.position, Quaternion.identity);
                 card.SetCardFace(suit, value);
 
                 Deck.Push(card);
@@ -145,11 +145,24 @@ public class GameManager : MonoBehaviour
         PlayCards(card);
     }
 
-    public void PlayCards(List<Card> cards) {
+    public void PlayCards(List<Card> cards)
+    {
+        Card topCard = PlayedDeck.Peek();
+
+        // Shitty bypass in case no card is currently in the played pile.......... only relevant after clearing
+        if(topCard == null)
+        {
+            Debug.Log($"PlayedDeck is empty...");    
+        }
+        else if ((cards[0].Value is not TWO) // ACE and TEN are accounted for in enum
+                && (cards[0].Value < topCard.Value)) return;
+    
+    
         foreach (Card card in cards)
         {
             PlayedDeck.Push(card);
             // TransformCardToFitDeck(card, PlayedDeck);
         }
+        // If TEN played, keep game state
     }
 }

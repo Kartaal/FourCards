@@ -53,6 +53,7 @@ public class PlayedDeckController : DeckController
         if (foursCounter == 4)
         {
             DiscardDeck();
+            // QQQ don't update game's state...
         }
     }
 

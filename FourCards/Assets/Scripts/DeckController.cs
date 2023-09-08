@@ -177,8 +177,12 @@ public class DeckController : MonoBehaviour
 
 
 
-    public Card Peek() {
-        return Cards[^1];
+    public Card Peek()
+    {
+        if (Cards.Count > 0)
+            return Cards[^1];
+        
+        return null;
     }
 
     public (Card, int) PeekMatching() {
